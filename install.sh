@@ -30,10 +30,10 @@ mkfs.fat -F 32 "/dev/$bootpartitionname"
 
 read -p "" enter
 
-mount $rootpartitionname /mnt
-swapon $swappartitionname
-mkdir /mnt/boot/efi
-mount $bootpartitionname /mnt/boot/efi
+mount "/dev/$rootpartitionname" /mnt
+swapon "/dev/$swappartitionname"
+mkdir "/mnt/boot/efi"
+mount "/dev/$bootpartitionname" "/mnt/boot/efi"
 
 read -p "" enter
 
