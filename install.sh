@@ -1,7 +1,4 @@
 #/bin/bash
-
-timedatectl set-ntp true
-
 lsblk
 
 $userdiskname
@@ -10,21 +7,27 @@ read -p "Enter disk name (/dev/sdX): " userdiskname
 
 cfdisk $userdiskname
 
+clear
+
 $rootpartitionname
 $swappartitionname
 $bootpartitionname
 read -p "Enter name for root partition (/dev/sdX1): " $rootpartitionname
 read -p "Enter name for swap partition (/dev/sdX1): " $swappartitionname
 read -p "Enter name for boot partition (/dev/sdX1): " $bootpartitionname
-
+clear
 mkfs.ext4 $rootpartitionname
 mkswap $swappartitionname
 mkfs.fat -F 32 $bootpartitionname
+
+read -p "" enter #
 
 mount $rootpartitionname /mnt
 swapon $swappartitionname
 mkdir /mnt/boot/efi
 mount $bootpartitionname /mnt/boot/efi
+
+read -p "" enter #
 
 pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano os-prober grub efibootmgr
 
