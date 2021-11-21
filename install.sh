@@ -28,8 +28,8 @@ mkfs.fat -F 32 "/dev/$bootpartitionname"
 
 mount "/dev/$rootpartitionname" /mnt
 swapon "/dev/$swappartitionname"
-mkdir /mnt/boot/efi
-mount "/dev/$bootpartitionname" /mnt/boot/efi
+mkdir -p /mnt/boot
+mount "/dev/$bootpartitionname" /mnt/boot
 
 read -p "" enter
 
@@ -41,7 +41,7 @@ arch-chroot /mnt
 
 $timename
 read -p "Enter name for time (Region/City - ex. America/New_York): " timename
-ln -sf /usr/share/zoneinfo/$timename /etc/localtime
+ln -sf "/usr/share/zoneinfo/$timename" /etc/localtime
 
 hwclock --systohc
 
@@ -64,5 +64,5 @@ passwd
 
 os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 reboot
