@@ -22,18 +22,14 @@ echo $rootpartitionname
 echo $swappartitionname
 echo $bootpartitionname
 
-read -p "" enter
-
 mkfs.ext4 "/dev/$rootpartitionname"
 mkswap "/dev/$swappartitionname"
 mkfs.fat -F 32 "/dev/$bootpartitionname"
 
-read -p "" enter
-
 mount "/dev/$rootpartitionname" /mnt
 swapon "/dev/$swappartitionname"
-mkdir "/mnt/boot/efi"
-mount "/dev/$bootpartitionname" "/mnt/boot/efi"
+mkdir /mnt/boot/efi
+mount "/dev/$bootpartitionname" /mnt/boot/efi
 
 read -p "" enter
 
