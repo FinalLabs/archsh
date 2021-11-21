@@ -13,9 +13,9 @@ $rootpartitionname
 $swappartitionname
 $bootpartitionname
 lsblk
-read -p "Enter number for root partition (ex. 1): " $rootpartitionname
-read -p "Enter name for swap partition (ex. 2): " $swappartitionname
-read -p "Enter name for boot partition (ex. 3): " $bootpartitionname
+read -p "Enter number for root partition (ex. sdX1): " rootpartitionname
+read -p "Enter name for swap partition (ex. sdX2): " swappartitionname
+read -p "Enter name for boot partition (ex. sdX3): " bootpartitionname
 clear
 
 echo $rootpartitionname
@@ -24,9 +24,9 @@ echo $bootpartitionname
 
 read -p "" enter
 
-mkfs.ext4 $rootpartitionname
-mkswap $swappartitionname
-mkfs.fat -F 32 $bootpartitionname
+mkfs.ext4 "/dev/$rootpartitionname"
+mkswap "/dev/$swappartitionname"
+mkfs.fat -F 32 "/dev/$bootpartitionname"
 
 read -p "" enter
 
@@ -44,7 +44,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
 $timename
-read -p "Enter name for time (Region/City - ex. America/New_York): " $timename
+read -p "Enter name for time (Region/City - ex. America/New_York): " timename
 ln -sf /usr/share/zoneinfo/$timename /etc/localtime
 
 hwclock --systohc
@@ -53,14 +53,14 @@ nano /etc/locale.gen
 locale-gen
 
 $localename
-read -p "Enter name for locale: " $localename
+read -p "Enter name for locale: " localename
 
 touch /etc/locale.conf
 echo "LANG=$localename" > /etc/locale.conf
 cat /etc/locale.conf
 
 $hostname
-read -p "Enter hostname:" $hostname
+read -p "Enter hostname:" hostname
 echo $hostname > /etc/hostname
 
 echo "Set password for root!"
