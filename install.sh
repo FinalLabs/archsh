@@ -12,22 +12,30 @@ clear
 $rootpartitionname
 $swappartitionname
 $bootpartitionname
-read -p "Enter name for root partition (/dev/sdX1): " $rootpartitionname
-read -p "Enter name for swap partition (/dev/sdX1): " $swappartitionname
-read -p "Enter name for boot partition (/dev/sdX1): " $bootpartitionname
+lsblk
+read -p "Enter number for root partition (ex. 1): " $rootpartitionname
+read -p "Enter name for swap partition (ex. 2): " $swappartitionname
+read -p "Enter name for boot partition (ex. 3): " $bootpartitionname
 clear
+
+echo $rootpartitionname
+echo $swappartitionname
+echo $bootpartitionname
+
+read -p "" enter
+
 mkfs.ext4 $rootpartitionname
 mkswap $swappartitionname
 mkfs.fat -F 32 $bootpartitionname
 
-read -p "" enter #
+read -p "" enter
 
 mount $rootpartitionname /mnt
 swapon $swappartitionname
 mkdir /mnt/boot/efi
 mount $bootpartitionname /mnt/boot/efi
 
-read -p "" enter #
+read -p "" enter
 
 pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano os-prober grub efibootmgr
 
