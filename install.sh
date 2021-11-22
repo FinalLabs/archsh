@@ -35,6 +35,6 @@ pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano
  
 genfstab -U /mnt >> /mnt/etc/fstab
 
-wget -O /root/chroot.sh https://raw.githubusercontent.com/FinalLabs/arch-install-script/main/chroot.sh
+wget -O ~/chroot.sh https://raw.githubusercontent.com/FinalLabs/arch-install-script/main/chroot.sh
 
-arch-chroot /mnt /root/chroot.sh
+arch-chroot /mnt ~/chroot.sh
