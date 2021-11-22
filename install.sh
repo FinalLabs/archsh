@@ -33,43 +33,9 @@ mount "/dev/$bootpartitionname" /mnt/boot
 
 pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano grub efibootmgr
 
-clear
-read -p "press enter" enter
-
 genfstab -U /mnt >> /mnt/etc/fstab
 
-clear
-read -p "press enter" enter
+git clone 
 
-touch /root/arch-install.sh
-
-$archchrootdir /root/arch-install.sh
-
-$scriptchroot "\$timename
-read -p 'Enter name for time (Region/City - ex. America/New_York):' timename
-ln -sf '/usr/share/zoneinfo/\$timename' /etc/localtime
-
-hwclock --systohc
-
-nano /etc/locale.gen
-locale-gen
-
-\$localename
-read -p 'Enter name for locale: ' localename
-
-echo 'LANG=\$localename' > /etc/locale.conf
-cat /etc/locale.conf
-
-\$hostname
-read -p 'Enter hostname:' hostname
-cat /etc/hostname
-
-echo 'Set password for root!'
-passwd
-
-grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-reboot"
-
-echo scriptchroot >> archchrootdir
+echo scriptchroot >> /root/arch-install.sh
 arch-chroot /mnt /root/chroot-install.sh
