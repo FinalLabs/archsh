@@ -41,50 +41,5 @@ genfstab -U /mnt >> /mnt/etc/fstab
 clear
 read -p "press enter" enter
 
-arch-chroot /mnt
 
-clear
-read -p "press enter" enter
-
-$timename
-read -p "Enter name for time (Region/City - ex. America/New_York): " timename
-ln -sf /usr/share/zoneinfo/$timename /etc/localtime
-
-hwclock --systohc
-
-clear
-read -p "press enter" enter
-
-nano /etc/locale.gen
-locale-gen
-
-clear
-read -p "press enter" enter
-
-$localename
-read -p "Enter name for locale: " localename
-
-#touch /etc/locale.conf
-echo "LANG=$localename" > /etc/locale.conf
-cat /etc/locale.conf
-
-clear
-read -p "press enter" enter
-
-$hostname
-read -p "Enter hostname:" hostname
-echo hostname > /etc/hostname
-cat /etc/hostname
-
-clear
-read -p "press enter" enter
-
-echo "Set password for root!"
-passwd
-
-clear
-read -p "press enter" enter
-
-grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-reboot
+arch-chroot /mnt /root/chroot-install.sh
