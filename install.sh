@@ -31,11 +31,10 @@ swapon "/dev/$swappartitionname"
 mkdir -p /mnt/boot
 mount "/dev/$bootpartitionname" /mnt/boot
 
-pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano grub efibootmgr
-
+pacstrap /mnt base linux base-devel pulseaudio linux-headers linux-firmware nano grub efibootmgr wget
+ 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-git clone 
+wget -O /root/chroot.sh https://raw.githubusercontent.com/FinalLabs/arch-install-script/main/chroot.sh
 
-echo scriptchroot >> /root/arch-install.sh
-arch-chroot /mnt /root/chroot-install.sh
+arch-chroot /mnt /root/chroot.sh
