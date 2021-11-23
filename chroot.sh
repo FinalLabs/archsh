@@ -1,7 +1,7 @@
 #/bin/bash
 clear
 
-pacman -S zsh
+pacman -S zsh grub git reflector pulseaudio 
 
 $timename
 read -p "Enter name for time (Region/City - ex. America/New_York): " timename
@@ -22,6 +22,10 @@ $hostname
 read -p "Enter hostname: " hostname
 echo $hostname > /etc/hostname
 
+echo "127.0.0.1 localhost" > /etc/hosts
+echo "::1 localhost" > /etc/hosts
+echo "127.0.1.1 $hostname.localdomain $hostname" > /etc/hosts
+
 echo "Set password for root!"
 passwd
 
@@ -31,4 +35,4 @@ useradd -s /usr/bin/zsh -G wheel $username
 passwd $username
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-reboot
+grub-mkconfig -o /boot/grub/grub.cfg
