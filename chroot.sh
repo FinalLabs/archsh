@@ -1,7 +1,7 @@
 #/bin/bash
 clear
 
-pacman -S zsh grub git reflector pulseaudio 
+pacman -S grub git reflector pulseaudio networkmanager sddm plasma
 
 $timename
 read -p "Enter name for time (Region/City - ex. America/New_York): " timename
@@ -29,10 +29,15 @@ echo "127.0.1.1 $hostname.localdomain $hostname" > /etc/hosts
 echo "Set password for root!"
 passwd
 
+EDITOR=nano visudo
+
 $username
 read -p "Enter username: " username
-useradd -s /usr/bin/zsh -G wheel $username
+useradd -s -G wheel $username
 passwd $username
+
+systemctl enable sddm.service
+systemctl enable networkmanager
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
